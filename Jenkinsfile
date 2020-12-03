@@ -5,6 +5,8 @@ pipeline {
     }
     environment{
         MY_FILE = fileExists '.\\sample-project'
+        GIT_PASSWORD = 'Mogea.110994'
+        GIT_USERNAME = 'morgom94'
     }
     
     stages {
@@ -32,8 +34,9 @@ pipeline {
         }
         stage("Jar") {
             steps {
-                    bat "cd .\\sample-project && mvn site:jar"
-                
+                bat "cd .\\sample-project && mvn site:jar"
+                echo "JAR CONTENT"
+                bat "jar -tf .\\sample-project\\target\\sample-project-1.0-SNAPSHOT-site.jar"
             }
         }
     }
