@@ -28,5 +28,10 @@ pipeline {
                 }
             }
         }
+        stage("Jar") {
+            steps {
+                bat "mvn site:jar"
+            }
+        }
     }
 }
