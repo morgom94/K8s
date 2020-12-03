@@ -4,7 +4,7 @@ pipeline {
         maven "mavenTool"
     }
     environment{
-        MY_FILE = fileExists 'C:\\Users\\erick.morales\\.jenkins\\workspace\\JavaSite\\sample-project'
+        MY_FILE = fileExists '.\\sample-project'
     }
     
     stages {
