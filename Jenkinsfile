@@ -23,14 +23,17 @@ pipeline {
         }
         stage("Site") {
             steps {
-                timeout(time: 90, unit: 'SECONDS') {
-                    bat "cd .\\sample-project && mvn site:run -Dport=8081"
+                catchError(buildResult: 'ABORTED', message: 'stage completed', stageResult: 'SUCCESS'){
+                    timeout(time: 10, unit: 'SECONDS') {
+                        bat "cd .\\sample-project && mvn site:run -Dport=8081"
+                    }
                 }
             }
         }
         stage("Jar") {
             steps {
-                bat "mvn site:jar"
+                    bat "cd .\\sample-project && mvn site:jar"
+                
             }
         }
     }
