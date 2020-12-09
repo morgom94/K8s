@@ -5,8 +5,6 @@ pipeline {
     }
     environment{
         MY_FILE = fileExists '.\\sample-project'
-        GIT_PASSWORD = 'Mogea.110994'
-        GIT_USERNAME = 'morgom94'
     }
     
     stages {
@@ -25,8 +23,8 @@ pipeline {
         }
         stage("Site") {
             steps {
-                catchError(buildResult: 'ABORTED', message: 'stage completed', stageResult: 'SUCCESS'){
-                    timeout(time: 10, unit: 'SECONDS') {
+                catchError(buildResult: 'ABORTED', message: 'STAGE COMPLETED', stageResult: 'SUCCESS'){
+                    timeout(time: 100, unit: 'SECONDS') {
                         bat "cd .\\sample-project && mvn site:run -Dport=8081"
                     }
                 }
@@ -37,6 +35,16 @@ pipeline {
                 bat "cd .\\sample-project && mvn site:jar"
                 echo "JAR CONTENT"
                 bat "jar -tf .\\sample-project\\target\\sample-project-1.0-SNAPSHOT-site.jar"
+            }
+        }
+        stage("Deploy") {
+            steps {
+                bat "cd .\\sample-project && mvn site:deploy"
+            }
+        }
+        stage("java cp"){
+            steps{
+                bat "java -cp .\\sample-project\\target\\sample-project-1.0-SNAPSHOT.jar org.sonatype.mavenbook.App"
             }
         }
     }
