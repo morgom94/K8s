@@ -7,7 +7,7 @@ pipeline {
         choice(choices: ['TestMagicBuilder', 'TestMessageBuilder'], description: 'Choose a test to buildtr', name: 'TESTS')
     }
     stages {
-        stage('Build') {
+        stage('Package') {
             steps {
                 git 'https://github.com/morgom94/Maven.git'
                 bat "mvn clean package -DskipTests"
